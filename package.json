@@ -1,7 +1,7 @@
 {
   "name": "prg-validator",
   "version": "0.1.0",
-  "description": "Validation framework for isomorfic validators",
+  "description": "Isomorphic Validation framework",
   "main": "src/index.js",
   "scripts": {
     "doc": "node ./bin/makeApiDoc.js",
