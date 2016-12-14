@@ -1,6 +1,6 @@
 {
   "name": "prg-validator",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Isomorphic Validation framework",
   "main": "src/index.js",
   "scripts": {
@@ -13,21 +13,19 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/pragonauts/webalize.git"
+    "url": "git+ssh://git@github.com/pragonauts/prg-validator.git"
   },
   "keywords": [
-    "webalize",
-    "url",
-    "nette",
-    "camelcase",
-    "diacritics"
+    "isomorphic",
+    "validator",
+    "validation"
   ],
   "author": "Pragonauts",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/pragonauts/webalize/issues"
+    "url": "https://github.com/pragonauts/prg-validator/issues"
   },
-  "homepage": "https://github.com/pragonauts/webalize#readme",
+  "homepage": "https://github.com/pragonauts/prg-validator#readme",
   "devDependencies": {
     "eslint": "^3.10.2",
     "eslint-config-airbnb": "^13.0.0",
