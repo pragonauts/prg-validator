@@ -15,7 +15,7 @@ const dotNotation = require('./dotNotation');
  * @class ValidationError
  */
 class ValidationError {
-    constructor (def, property = null) {
+    constructor (def, property) {
         /**
          * @prop {string} message validator message
          */
@@ -24,7 +24,7 @@ class ValidationError {
         /**
          * @prop {string} property name of the property
          */
-        this.property = property;
+        this.property = property || null;
 
         /**
          * @prop {string} type validator name (or function)
@@ -81,7 +81,7 @@ function processCondition (def, val, data, context, nextFn) {
 }
 
 
-function validateRules (rules, property, value, context = null, data = {}, realPath = null) {
+function validateRules (rules, property, value, context, data, realPath) {
     let val = value;
     return waitingIterator(rules).forEach((def, i, previous) => {
         val = processPreviousValue(rules, i, previous, val, realPath || property);
@@ -123,7 +123,10 @@ function validateRules (rules, property, value, context = null, data = {}, realP
             action = def.action.bind(def.action);
         }
 
-        return action(val, ...def.args);
+        const args = def.args.slice();
+        args.unshift(val);
+
+        return action.apply(action, args);
     }).then(previous =>
         processPreviousValue(rules, rules.length, previous, val, realPath || property));
 }
@@ -169,13 +172,13 @@ class Validator {
      *
      * @memberOf Validator
      */
-    validateProp (property, value, context = null, data = {}) {
+    validateProp (property, value, context, data) {
         const rules = this.rules.get(property);
         if (!rules) {
             return Promise.resolve(undefined);
         }
 
-        return validateRules(rules, property, value, context, data);
+        return validateRules(rules, property, value, context || null, data || {});
     }
 
     /**
@@ -188,12 +191,13 @@ class Validator {
      *
      * @memberOf Validator
      */
-    validate (data, context = null, catchAllErrors = false) {
+    validate (data, context, catchAllErrors) {
         const builder = dotNotation(data, catchAllErrors);
+        const ctx = context || null;
 
         this.rules.forEach((rules, property) => builder.map(
             property,
-            (value, realPath) => validateRules(rules, property, value, context, data, realPath)
+            (value, realPath) => validateRules(rules, property, value, ctx, data, realPath)
         ));
 
         return builder.promise();

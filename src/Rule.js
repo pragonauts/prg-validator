@@ -33,12 +33,12 @@ class Rule {
      *
      * @memberOf Rule
      */
-    is (action, message = null, ...args) {
+    is (action, message) {
         this.rules.push({
             type: 'validator',
             action,
-            message,
-            args
+            message: message || null,
+            args: Array.from(arguments).slice(2) // eslint-disable-line prefer-rest-params
         });
         return this;
     }
@@ -55,11 +55,11 @@ class Rule {
      *
      * @memberOf Rule
      */
-    to (action, ...args) {
+    to (action) {
         this.rules.push({
             type: 'sanitizer',
             action,
-            args
+            args: Array.from(arguments).slice(1) // eslint-disable-line prefer-rest-params
         });
         return this;
     }
@@ -126,8 +126,8 @@ class Rule {
      *
      * @memberOf Rule
      */
-    contains (string, message = null) {
-        this.is('contains', message, string);
+    contains (string, message) {
+        this.is('contains', message || null, string);
         return this;
     }
 
@@ -139,8 +139,8 @@ class Rule {
      *
      * @memberOf Rule
      */
-    isNumeric (message = null) {
-        this.is('isNumeric', message);
+    isNumeric (message) {
+        this.is('isNumeric', message || null);
         return this;
     }
 
@@ -152,8 +152,8 @@ class Rule {
      *
      * @memberOf Rule
      */
-    isEmail (message = null) {
-        this.is('isEmail', message);
+    isEmail (message) {
+        this.is('isEmail', message || null);
         return this;
     }
 
@@ -165,8 +165,8 @@ class Rule {
      *
      * @memberOf Rule
      */
-    isRequired (message = null) {
-        this.is(':isRequired', message);
+    isRequired (message) {
+        this.is(':isRequired', message || null);
         return this;
     }
 
@@ -178,8 +178,8 @@ class Rule {
      *
      * @memberOf Rule
      */
-    toInt (radix = 10) {
-        this.to('toInt', radix);
+    toInt (radix) {
+        this.to('toInt', radix || 10);
         return this;
     }
 
@@ -191,8 +191,8 @@ class Rule {
      *
      * @memberOf Rule
      */
-    toBoolean (strict = false) {
-        this.to('toBoolean', strict);
+    toBoolean (strict) {
+        this.to('toBoolean', !!strict);
         return this;
     }
 }

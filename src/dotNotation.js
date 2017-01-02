@@ -33,12 +33,15 @@ function recursive (
         promiseCollector,
         path,
         fn,
-        dataObject = {},
-        obj = {},
-        stackPath = '',
-        setVal = undefined) {
+        dataObject,
+        obj,
+        stackPath,
+        setVal) {
 
-    const [, key, isArray, nextPath] = path.match(/^([^.[\]]+)(\[])?\.?(.*)$/);
+    const match = path.match(/^([^.[\]]+)(\[])?\.?(.*)$/);
+    const key = match[1];
+    const isArray = match[2];
+    const nextPath = match[3];
 
     if (isArray) {
         if (Array.isArray(dataObject[key])) {
@@ -85,8 +88,8 @@ function recursive (
 
 class DotNotation {
 
-    constructor (data, catchAll = false, output = {}) {
-        this.output = output;
+    constructor (data, catchAll, output) {
+        this.output = output || {};
         this.data = data;
         this._promise = catchAll ? null : Promise.resolve();
         this._collector = [];
@@ -97,12 +100,12 @@ class DotNotation {
         if (this._promise) {
             this._promise = this._promise.then(() => {
                 const collector = [];
-                recursive(collector, property, func, this.data, this.output);
+                recursive(collector, property, func, this.data, this.output, '');
                 return Promise.all(collector);
             });
         } else {
             const collector = [];
-            recursive(collector, property, func, this.data, this.output);
+            recursive(collector, property, func, this.data, this.output, '');
             const catched = collector.map(promise => promise.catch(e => this.errors.push(e)));
             this._collector.push(Promise.all(catched));
         }
@@ -124,7 +127,7 @@ class DotNotation {
     }
 }
 
-function dotNotation (dataObject, catchAll = false, createObject = {}) {
+function dotNotation (dataObject, catchAll, createObject) {
     return new DotNotation(dataObject, catchAll, createObject);
 }
 

@@ -85,8 +85,8 @@ describe('Validator', function () {
         const data = {};
 
         Promise.all([validator1.validate(data), validator2.validate(data)])
-            .then(([res1, res2]) => {
-                assert.deepStrictEqual(res1, res2);
+            .then((res) => {
+                assert.deepStrictEqual(res[0], res[1]);
                 done();
             })
             .catch(done);
