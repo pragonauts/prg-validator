@@ -3,6 +3,6 @@
  */
 'use strict';
 
-const Validator = require('./Validator');
+const Validator = require('./src/Validator');
 
 module.exports = Validator;
