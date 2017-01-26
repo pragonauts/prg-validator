@@ -1,6 +1,6 @@
 {
   "name": "prg-validator",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Isomorphic Validation framework",
   "main": "main.js",
   "scripts": {

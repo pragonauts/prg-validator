@@ -183,6 +183,7 @@ Validate single property
     * [.contains(string, [message])](#Rule+contains) ⇒ <code>this</code>
     * [.isNumeric([message])](#Rule+isNumeric) ⇒ <code>this</code>
     * [.isEmail([message])](#Rule+isEmail) ⇒ <code>this</code>
+    * [.isUrl([message], [options])](#Rule+isUrl) ⇒ <code>this</code>
     * [.isRequired([message])](#Rule+isRequired) ⇒ <code>this</code>
     * [.isRequiredIfPresent([message])](#Rule+isRequiredIfPresent) ⇒ <code>this</code>
     * [.toInt([message])](#Rule+toInt) ⇒ <code>this</code>
@@ -307,6 +308,33 @@ Input should be the email
 | --- | --- | --- |
 | [message] | <code>string</code> | <code>null</code> | 
 
+<a name="Rule+isUrl"></a>
+
+### rule.isUrl([message], [options]) ⇒ <code>this</code>
+Validates non-empty strings as url
+
+**Kind**: instance method of <code>[Rule](#Rule)</code>  
+
+| Param | Type | Default |
+| --- | --- | --- |
+| [message] | <code>string</code> | <code>null</code> | 
+| [options] | <code>Object</code> | <code></code> | 
+
+**Example**  
+```javascript
+validator.isUrl('Message', {
+      protocols: ['http','https','ftp'],
+      require_tld: true,
+      require_protocol: false,
+      require_host: true,
+      require_valid_protocol: true,
+      allow_underscores: false,
+      host_whitelist: false,
+      host_blacklist: false,
+      allow_trailing_dot: false,
+      allow_protocol_relative_urls: false
+ })
+```
 <a name="Rule+isRequired"></a>
 
 ### rule.isRequired([message]) ⇒ <code>this</code>
@@ -367,6 +395,7 @@ Makes the boolean from an input
     * [.contains(string, [message])](#Rule+contains) ⇒ <code>this</code>
     * [.isNumeric([message])](#Rule+isNumeric) ⇒ <code>this</code>
     * [.isEmail([message])](#Rule+isEmail) ⇒ <code>this</code>
+    * [.isUrl([message], [options])](#Rule+isUrl) ⇒ <code>this</code>
     * [.isRequired([message])](#Rule+isRequired) ⇒ <code>this</code>
     * [.isRequiredIfPresent([message])](#Rule+isRequiredIfPresent) ⇒ <code>this</code>
     * [.toInt([message])](#Rule+toInt) ⇒ <code>this</code>
@@ -491,6 +520,33 @@ Input should be the email
 | --- | --- | --- |
 | [message] | <code>string</code> | <code>null</code> | 
 
+<a name="Rule+isUrl"></a>
+
+### rule.isUrl([message], [options]) ⇒ <code>this</code>
+Validates non-empty strings as url
+
+**Kind**: instance method of <code>[Rule](#Rule)</code>  
+
+| Param | Type | Default |
+| --- | --- | --- |
+| [message] | <code>string</code> | <code>null</code> | 
+| [options] | <code>Object</code> | <code></code> | 
+
+**Example**  
+```javascript
+validator.isUrl('Message', {
+      protocols: ['http','https','ftp'],
+      require_tld: true,
+      require_protocol: false,
+      require_host: true,
+      require_valid_protocol: true,
+      allow_underscores: false,
+      host_whitelist: false,
+      host_blacklist: false,
+      allow_trailing_dot: false,
+      allow_protocol_relative_urls: false
+ })
+```
 <a name="Rule+isRequired"></a>
 
 ### rule.isRequired([message]) ⇒ <code>this</code>

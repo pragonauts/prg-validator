@@ -343,6 +343,65 @@ describe('Validator', function () {
             .catch(done);
     });
 
+
+    it('has some working validators', function (done) {
+
+        const validator = new Validator();
+
+        validator.add('goodUrl')
+            .isUrl('GOOD URL');
+
+        validator.add('badUrl')
+            .isUrl('BAD URL');
+
+        validator.add('goodUrlWithProto')
+            .isUrl('GOOD PROTO URL', { require_protocol: true });
+
+        validator.add('badUrlWithProto')
+            .isUrl('BAD PROTO URL', { require_protocol: true });
+
+        validator.add('goodEmail')
+            .isEmail('GOOD EMAIL');
+
+        validator.add('badEmail')
+            .isEmail('BAD EMAIL');
+
+
+        validator.validate({
+            goodUrl: 'www.some.cz:304/dkkd?fpoi=1#hash',
+            badUrl: 'urlWithoutHttp',
+            goodUrlWithProto: 'https://www.some.cz:304/dkkd?fpoi=1#hash',
+            badUrlWithProto: 'www.some.cz:304',
+            goodEmail: 'mail@some.cz',
+            badEmail: 'mail@domain'
+        }, null, true)
+            .then(() => done('Should never been called'))
+            .catch((errors) => {
+                assert.deepEqual(errors, [
+                    {
+                        message: 'BAD URL',
+                        property: 'badUrl',
+                        type: 'isURL',
+                        status: 400
+                    },
+                    {
+                        message: 'BAD PROTO URL',
+                        property: 'badUrlWithProto',
+                        type: 'isURL',
+                        status: 400
+                    },
+                    {
+                        message: 'BAD EMAIL',
+                        property: 'badEmail',
+                        type: 'isEmail',
+                        status: 400
+                    }
+                ], 'Validation must be ok');
+                done();
+            })
+            .catch(done);
+    });
+
     it('should throw an exception, when validator does not exist', function (done) {
 
         const validator = new Validator();

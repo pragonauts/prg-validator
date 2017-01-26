@@ -158,6 +158,33 @@ class Rule {
     }
 
     /**
+     * Validates non-empty strings as url
+     *
+     * @param {string} [message=null]
+     * @param {Object} [options=null]
+     * @returns {this}
+     *
+     * @memberOf Rule
+     * @example
+     * validator.isUrl('Message', {
+     *       protocols: ['http','https','ftp'],
+     *       require_tld: true,
+     *       require_protocol: false,
+     *       require_host: true,
+     *       require_valid_protocol: true,
+     *       allow_underscores: false,
+     *       host_whitelist: false,
+     *       host_blacklist: false,
+     *       allow_trailing_dot: false,
+     *       allow_protocol_relative_urls: false
+     *  })
+     */
+    isUrl (message, options) {
+        this.is('isURL', message || null, options);
+        return this;
+    }
+
+    /**
      * Input is required
      *
      * @param {string} [message=null]
