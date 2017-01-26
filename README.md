@@ -175,8 +175,8 @@ Validate single property
 * [Rule](#Rule)
     * [new Rule()](#new_Rule_new)
     * [new Rule(rules)](#new_Rule_new)
-    * [.is(action, [message], [...args])](#Rule+is) ⇒ <code>this</code>
-    * [.to(action, [...args])](#Rule+to) ⇒ <code>this</code>
+    * [.is(action, [message], [args])](#Rule+is) ⇒ <code>this</code>
+    * [.to(action, [args])](#Rule+to) ⇒ <code>this</code>
     * [.if(action)](#Rule+if) ⇒ <code>this</code>
     * [.endIf()](#Rule+endIf) ⇒ <code>this</code>
     * [.default(value)](#Rule+default) ⇒ <code>this</code>
@@ -184,6 +184,7 @@ Validate single property
     * [.isNumeric([message])](#Rule+isNumeric) ⇒ <code>this</code>
     * [.isEmail([message])](#Rule+isEmail) ⇒ <code>this</code>
     * [.isRequired([message])](#Rule+isRequired) ⇒ <code>this</code>
+    * [.isRequiredIfPresent([message])](#Rule+isRequiredIfPresent) ⇒ <code>this</code>
     * [.toInt([message])](#Rule+toInt) ⇒ <code>this</code>
     * [.toBoolean([message])](#Rule+toBoolean) ⇒ <code>this</code>
 
@@ -204,7 +205,7 @@ Creates an instance of Rule.
 
 <a name="Rule+is"></a>
 
-### rule.is(action, [message], [...args]) ⇒ <code>this</code>
+### rule.is(action, [message], [args]) ⇒ <code>this</code>
 Add any validator to rule
 
 **Kind**: instance method of <code>[Rule](#Rule)</code>  
@@ -213,7 +214,7 @@ Add any validator to rule
 | --- | --- | --- | --- |
 | action | <code>string</code> &#124; <code>function</code> |  | name of the validator |
 | [message] | <code>any</code> | <code></code> | error message |
-| [...args] | <code>any</code> |  | arguments to pass to the validator |
+| [args] | <code>any</code> |  | arguments to pass to the validator |
 
 **Example**  
 ```javascript
@@ -222,7 +223,7 @@ validator.add('property')
 ```
 <a name="Rule+to"></a>
 
-### rule.to(action, [...args]) ⇒ <code>this</code>
+### rule.to(action, [args]) ⇒ <code>this</code>
 Adds sanitizer (filter) which converts value to different type
 
 **Kind**: instance method of <code>[Rule](#Rule)</code>  
@@ -230,7 +231,7 @@ Adds sanitizer (filter) which converts value to different type
 | Param | Type | Description |
 | --- | --- | --- |
 | action | <code>string</code> &#124; <code>function</code> |  |
-| [...args] | <code>any</code> | arguments to pass to the validator |
+| [args] | <code>any</code> | arguments to pass to the validator |
 
 **Example**  
 ```javascript
@@ -310,6 +311,17 @@ Input should be the email
 
 ### rule.isRequired([message]) ⇒ <code>this</code>
 Input is required
+
+**Kind**: instance method of <code>[Rule](#Rule)</code>  
+
+| Param | Type | Default |
+| --- | --- | --- |
+| [message] | <code>string</code> | <code>null</code> | 
+
+<a name="Rule+isRequiredIfPresent"></a>
+
+### rule.isRequiredIfPresent([message]) ⇒ <code>this</code>
+Input is required, only when atributte is not missing (not undefined)
 
 **Kind**: instance method of <code>[Rule](#Rule)</code>  
 
@@ -347,8 +359,8 @@ Makes the boolean from an input
 * [Rule](#Rule)
     * [new Rule()](#new_Rule_new)
     * [new Rule(rules)](#new_Rule_new)
-    * [.is(action, [message], [...args])](#Rule+is) ⇒ <code>this</code>
-    * [.to(action, [...args])](#Rule+to) ⇒ <code>this</code>
+    * [.is(action, [message], [args])](#Rule+is) ⇒ <code>this</code>
+    * [.to(action, [args])](#Rule+to) ⇒ <code>this</code>
     * [.if(action)](#Rule+if) ⇒ <code>this</code>
     * [.endIf()](#Rule+endIf) ⇒ <code>this</code>
     * [.default(value)](#Rule+default) ⇒ <code>this</code>
@@ -356,6 +368,7 @@ Makes the boolean from an input
     * [.isNumeric([message])](#Rule+isNumeric) ⇒ <code>this</code>
     * [.isEmail([message])](#Rule+isEmail) ⇒ <code>this</code>
     * [.isRequired([message])](#Rule+isRequired) ⇒ <code>this</code>
+    * [.isRequiredIfPresent([message])](#Rule+isRequiredIfPresent) ⇒ <code>this</code>
     * [.toInt([message])](#Rule+toInt) ⇒ <code>this</code>
     * [.toBoolean([message])](#Rule+toBoolean) ⇒ <code>this</code>
 
@@ -376,7 +389,7 @@ Creates an instance of Rule.
 
 <a name="Rule+is"></a>
 
-### rule.is(action, [message], [...args]) ⇒ <code>this</code>
+### rule.is(action, [message], [args]) ⇒ <code>this</code>
 Add any validator to rule
 
 **Kind**: instance method of <code>[Rule](#Rule)</code>  
@@ -385,7 +398,7 @@ Add any validator to rule
 | --- | --- | --- | --- |
 | action | <code>string</code> &#124; <code>function</code> |  | name of the validator |
 | [message] | <code>any</code> | <code></code> | error message |
-| [...args] | <code>any</code> |  | arguments to pass to the validator |
+| [args] | <code>any</code> |  | arguments to pass to the validator |
 
 **Example**  
 ```javascript
@@ -394,7 +407,7 @@ validator.add('property')
 ```
 <a name="Rule+to"></a>
 
-### rule.to(action, [...args]) ⇒ <code>this</code>
+### rule.to(action, [args]) ⇒ <code>this</code>
 Adds sanitizer (filter) which converts value to different type
 
 **Kind**: instance method of <code>[Rule](#Rule)</code>  
@@ -402,7 +415,7 @@ Adds sanitizer (filter) which converts value to different type
 | Param | Type | Description |
 | --- | --- | --- |
 | action | <code>string</code> &#124; <code>function</code> |  |
-| [...args] | <code>any</code> | arguments to pass to the validator |
+| [args] | <code>any</code> | arguments to pass to the validator |
 
 **Example**  
 ```javascript
@@ -482,6 +495,17 @@ Input should be the email
 
 ### rule.isRequired([message]) ⇒ <code>this</code>
 Input is required
+
+**Kind**: instance method of <code>[Rule](#Rule)</code>  
+
+| Param | Type | Default |
+| --- | --- | --- |
+| [message] | <code>string</code> | <code>null</code> | 
+
+<a name="Rule+isRequiredIfPresent"></a>
+
+### rule.isRequiredIfPresent([message]) ⇒ <code>this</code>
+Input is required, only when atributte is not missing (not undefined)
 
 **Kind**: instance method of <code>[Rule](#Rule)</code>  
 

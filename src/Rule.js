@@ -171,6 +171,19 @@ class Rule {
     }
 
     /**
+     * Input is required, only when atributte is not missing (not undefined)
+     *
+     * @param {string} [message=null]
+     * @returns {this}
+     *
+     * @memberOf Rule
+     */
+    isRequiredIfPresent (message) {
+        this.is(':isRequiredIfPresent', message || null);
+        return this;
+    }
+
+    /**
      * Makes the integer from an input
      *
      * @param {string} [message=null]

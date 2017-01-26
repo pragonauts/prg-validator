@@ -320,6 +320,29 @@ describe('Validator', function () {
         return validator.validate(data, 'other');
     });
 
+    it('should skip items with semi-required validation', function (done) {
+        const validator = new Validator();
+
+        validator.add('semiRequired')
+            .isRequiredIfPresent('RequiredPresent Message');
+
+        validator.add('otherRequired')
+            .isRequiredIfPresent('Another Required Message');
+
+        validator.validate({ semiRequired: null }, null, true)
+            .then(() => done('Should never been called'))
+            .catch((errors) => {
+                assert.deepEqual(errors, [{
+                    message: 'RequiredPresent Message',
+                    property: 'semiRequired',
+                    type: ':isRequiredIfPresent',
+                    status: 400
+                }], 'Validation must be ok');
+                done();
+            })
+            .catch(done);
+    });
+
     it('should throw an exception, when validator does not exist', function (done) {
 
         const validator = new Validator();

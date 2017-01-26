@@ -9,6 +9,8 @@ const validators = require('./validators');
 const waitingIterator = require('./waitingIterator');
 const dotNotation = require('./dotNotation');
 
+const VALIDATES_EMPTY = [':isRequired', ':isRequiredIfPresent'];
+
 /**
  *
  *
@@ -44,7 +46,8 @@ function processPreviousValue (rules, i, returned, current, property) {
     const isEmpty = returned === null || returned === undefined;
     switch (prevDef.type) {
         case 'validator':
-            if ((isEmpty && prevDef.action === ':isRequired') || (!isEmpty && !returned)) {
+            if ((isEmpty && VALIDATES_EMPTY.indexOf(prevDef.action) !== -1)
+                    || (!isEmpty && !returned)) {
                 throw new ValidationError(prevDef, property);
             }
             return current;
@@ -97,7 +100,8 @@ function validateRules (rules, property, value, context, data, realPath) {
             }
             return val;
 
-        } else if ((val === null || val === undefined) && def.action !== ':isRequired') {
+        } else if ((val === null || val === undefined)
+                && VALIDATES_EMPTY.indexOf(def.action) === -1) {
             return val;
         }
 
