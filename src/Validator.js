@@ -107,6 +107,7 @@ function validateRules (rules, property, value, context, data, realPath) {
 
         // resolve action
         let action;
+        let stringifyValue = false;
         if (typeof def.action === 'string') {
             if (def.action.match(/^:/)) {
                 const method = def.action.substring(1);
@@ -121,6 +122,7 @@ function validateRules (rules, property, value, context, data, realPath) {
                 }
 
                 action = validator[def.action].bind(validator);
+                stringifyValue = true;
             }
 
         } else {
@@ -128,7 +130,7 @@ function validateRules (rules, property, value, context, data, realPath) {
         }
 
         const args = def.args.slice();
-        args.unshift(val);
+        args.unshift(stringifyValue ? `${val}` : val);
 
         return action.apply(action, args);
     }).then(previous =>
