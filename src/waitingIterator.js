@@ -25,10 +25,10 @@ function iterate (then, iterator, value, stopOn) {
     }
 
     if (isPromise(res)) {
-        return res.then(prev => iterate(then, iterator, prev));
+        return res.then(prev => iterate(then, iterator, prev, stopOn));
     }
 
-    return iterate(then, iterator, res);
+    return iterate(then, iterator, res, stopOn);
 }
 
 function waitingIterator (array) {

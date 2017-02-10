@@ -343,6 +343,18 @@ describe('Validator', function () {
             .catch(done);
     });
 
+    it('should pass conditional data', function () {
+        const validator = new Validator();
+
+        validator.add('semiRequired')
+            .if(['create'])
+                .isRequired('Required')
+            .endIf()
+            .isRequiredIfPresent('RequiredPresent Message');
+
+        return validator.validate({}, 'update', true);
+    });
+
 
     it('has some working validators', function (done) {
 
