@@ -3,6 +3,8 @@
  */
 'use strict';
 
+const bytesFromString = require('./bytesFromString');
+
 /**
  * Single attribute rule contructor
  *
@@ -211,6 +213,36 @@ class Rule {
     }
 
     /**
+     * Validates File mime types. Compatible with browser-side File class and prg-uploader
+     *
+     * @param {string} message - error message
+     * @param {string[]|string|regexp|regexp[]} types - validate theese types
+     * @returns {this}
+     *
+     * @memberOf Rule
+     */
+    isFileMime (message, types) {
+        const arrayOfTypes = Array.isArray(types) ? types : [types];
+        this.is(':fileMime', message || null, arrayOfTypes);
+        return this;
+    }
+
+    /**
+     * Validates File mime types. Compatible with browser-side File class and prg-uploader
+     *
+     * @param {string} message - error message
+     * @param {string[]|string|regexp|regexp[]} types - validate theese types
+     * @returns {this}
+     *
+     * @memberOf Rule
+     */
+    isFileMaxLength (message, maxLength) {
+        const length = bytesFromString(maxLength);
+        this.is(':fileMaxLength', message || null, length);
+        return this;
+    }
+
+    /**
      * Makes the integer from an input
      *
      * @param {string} [message=null]
@@ -233,6 +265,19 @@ class Rule {
      */
     toBoolean (strict) {
         this.to('toBoolean', !!strict);
+        return this;
+    }
+
+    /**
+     * Substracts data from the file.
+     * It actually extracts ".data" property from object, but just on the serverside
+     *
+     * @returns {this}
+     *
+     * @memberOf Rule
+     */
+    toFileData () {
+        this.to(':fileData');
         return this;
     }
 }

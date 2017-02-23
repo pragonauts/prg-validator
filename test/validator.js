@@ -33,10 +33,17 @@ describe('Validator', function () {
                 .isRequired();
 
         validator.add('nullValue') // numeric, but can be null
-                .isNumeric();
+            .isNumeric();
 
         validator.add('undefinedValue') // numeric, but can be undefinedValue
-                .isNumeric();
+            .isNumeric();
+
+        validator.add('someFile')
+            .toFileData();
+
+        const SOMEFILE = {
+            data: 'hello'
+        };
 
         const data = {
             name: 'oFoo',
@@ -45,7 +52,8 @@ describe('Validator', function () {
                 { name: 'haha', number: '345', skip: 'yes' },
                 { name: 'other', number: '3452', skip: 'yes', far: { far: { away: 15 } } }
             ],
-            skipped: true
+            skipped: true,
+            someFile: SOMEFILE
         };
 
         validator.validate(data)
@@ -56,7 +64,8 @@ describe('Validator', function () {
                         { name: 'haha', number: 345, far: { far: { away: 13 } } },
                         { name: 'other', number: 3452, far: { far: { away: 15 } } }
                     ],
-                    nullValue: null
+                    nullValue: null,
+                    someFile: typeof File === 'undefined' ? SOMEFILE.data : SOMEFILE
                 });
                 done();
             })
@@ -378,6 +387,41 @@ describe('Validator', function () {
         validator.add('badEmail')
             .isEmail('BAD EMAIL');
 
+        validator.add('goodFiles[]')
+            .isFileMime('Should have good mime', ['image/mime']);
+
+        validator.add('goodFiles2')
+            .isFileMime('Should have good mime', [/image/]);
+
+        validator.add('badFiles')
+            .isFileMime('Should have bad mime', ['image/mime']);
+
+        validator.add('badFiles2[]')
+            .isFileMime(null, [/image/]);
+
+        validator.add('shortFiles1[]')
+            .isFileMaxLength('Short', '1.5mb');
+
+        validator.add('shortFiles2')
+            .isFileMaxLength('Short', '1.5k');
+
+        validator.add('shortFiles3')
+            .isFileMaxLength('Short', 1024);
+
+        validator.add('shortFiles4')
+            .isFileMaxLength(null, '1024');
+
+        validator.add('longFiles1[]')
+            .isFileMaxLength('LONG 1', '1.5m');
+
+        validator.add('longFiles2')
+            .isFileMaxLength('LONG 2', '1.5kb');
+
+        validator.add('longFiles3')
+            .isFileMaxLength('LONG 3', 1024);
+
+        validator.add('longFiles4')
+            .isFileMaxLength(null, '1024');
 
         validator.validate({
             goodUrl: 'www.some.cz:304/dkkd?fpoi=1#hash',
@@ -385,7 +429,19 @@ describe('Validator', function () {
             goodUrlWithProto: 'https://www.some.cz:304/dkkd?fpoi=1#hash',
             badUrlWithProto: 'www.some.cz:304',
             goodEmail: 'mail@some.cz',
-            badEmail: 'mail@domain'
+            badEmail: 'mail@domain',
+            goodFiles: [{ type: 'image/mime' }],
+            goodFiles2: { type: 'image/jpeg' },
+            badFiles: { type: 'another/image' },
+            badFiles2: [{ type: 'some/vide' }],
+            shortFiles1: [{ size: 1048576 * 1.5 }],
+            shortFiles2: { size: 1024 * 1.5 },
+            shortFiles3: { size: 1024 },
+            shortFiles4: { size: 1024 },
+            longFiles1: [{ size: 1048577 * 1.5 }],
+            longFiles2: { size: 1025 * 1.5 },
+            longFiles3: { size: 1025 },
+            longFiles4: { size: 1025 }
         }, null, true)
             .then(() => done('Should never been called'))
             .catch((errors) => {
@@ -406,6 +462,42 @@ describe('Validator', function () {
                         message: 'BAD EMAIL',
                         property: 'badEmail',
                         type: 'isEmail',
+                        status: 400
+                    },
+                    {
+                        message: 'Should have bad mime',
+                        property: 'badFiles',
+                        type: ':fileMime',
+                        status: 400
+                    },
+                    {
+                        message: 'Validation failed',
+                        property: 'badFiles2[0]',
+                        type: ':fileMime',
+                        status: 400
+                    },
+                    {
+                        message: 'LONG 1',
+                        property: 'longFiles1[0]',
+                        type: ':fileMaxLength',
+                        status: 400
+                    },
+                    {
+                        message: 'LONG 2',
+                        property: 'longFiles2',
+                        type: ':fileMaxLength',
+                        status: 400
+                    },
+                    {
+                        message: 'LONG 3',
+                        property: 'longFiles3',
+                        type: ':fileMaxLength',
+                        status: 400
+                    },
+                    {
+                        message: 'Validation failed',
+                        property: 'longFiles4',
+                        type: ':fileMaxLength',
                         status: 400
                     }
                 ], 'Validation must be ok');
