@@ -87,7 +87,7 @@ function processCondition (def, val, data, context, nextFn) {
 function validateRules (rules, property, value, context, data, realPath) {
     let val = value;
     return waitingIterator(rules).forEach((def, i, previous) => {
-        val = processPreviousValue(rules, i, previous, val, realPath || property);
+        val = processPreviousValue(rules, i, previous, val, realPath);
 
         // process condition
         if (def.type === 'condition') {
@@ -134,7 +134,7 @@ function validateRules (rules, property, value, context, data, realPath) {
 
         return action.apply(action, args);
     }).then(previous =>
-        processPreviousValue(rules, rules.length, previous, val, realPath || property));
+        processPreviousValue(rules, rules.length, previous, val, realPath));
 }
 
 /**
@@ -179,12 +179,18 @@ class Validator {
      * @memberOf Validator
      */
     validateProp (property, value, context, data) {
-        const rules = this.rules.get(property);
+        let ruleProp = property;
+
+        if (!this.rules.has(ruleProp)) {
+            ruleProp = property.replace(/\[[0-9]+]/g, '[]');
+        }
+
+        const rules = this.rules.get(ruleProp);
         if (!rules) {
             return Promise.resolve(undefined);
         }
 
-        return validateRules(rules, property, value, context || null, data || {});
+        return validateRules(rules, ruleProp, value, context || null, data || {}, property);
     }
 
     /**

@@ -506,7 +506,7 @@ describe('Validator', function () {
             .catch(done);
     });
 
-    it('should throw an exception, when validator does not exist', function (done) {
+    it('should throw an exception, when validator does exists', function (done) {
 
         const validator = new Validator();
 
@@ -525,6 +525,24 @@ describe('Validator', function () {
             })
             .catch((e) => {
                 assert(e.message.match(/foobar/));
+                done();
+            });
+    });
+
+    it('should validate nice arrays', function (done) {
+
+        const validator = new Validator();
+
+        validator.add('name[]')
+            .if(['context'])
+                .is(v => v === 'bar')
+            .endIf();
+
+        validator.validateProp('name[1]', 'foo', 'context')
+            .then(() => {
+                done(new Error('Should not pass'));
+            })
+            .catch(() => {
                 done();
             });
     });
