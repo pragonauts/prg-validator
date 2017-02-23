@@ -186,8 +186,11 @@ Validate single property
     * [.isUrl([message], [options])](#Rule+isUrl) ⇒ <code>this</code>
     * [.isRequired([message])](#Rule+isRequired) ⇒ <code>this</code>
     * [.isRequiredIfPresent([message])](#Rule+isRequiredIfPresent) ⇒ <code>this</code>
+    * [.isFileMime(message, types)](#Rule+isFileMime) ⇒ <code>this</code>
+    * [.isFileMaxLength(message, types)](#Rule+isFileMaxLength) ⇒ <code>this</code>
     * [.toInt([message])](#Rule+toInt) ⇒ <code>this</code>
     * [.toBoolean([message])](#Rule+toBoolean) ⇒ <code>this</code>
+    * [.toFileData()](#Rule+toFileData) ⇒ <code>this</code>
 
 <a name="new_Rule_new"></a>
 
@@ -357,6 +360,30 @@ Input is required, only when atributte is not missing (not undefined)
 | --- | --- | --- |
 | [message] | <code>string</code> | <code>null</code> | 
 
+<a name="Rule+isFileMime"></a>
+
+### rule.isFileMime(message, types) ⇒ <code>this</code>
+Validates File mime types. Compatible with browser-side File class and prg-uploader
+
+**Kind**: instance method of <code>[Rule](#Rule)</code>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| message | <code>string</code> | error message |
+| types | <code>Array.&lt;string&gt;</code> &#124; <code>string</code> &#124; <code>regexp</code> &#124; <code>Array.&lt;regexp&gt;</code> | validate theese types |
+
+<a name="Rule+isFileMaxLength"></a>
+
+### rule.isFileMaxLength(message, types) ⇒ <code>this</code>
+Validates File mime types. Compatible with browser-side File class and prg-uploader
+
+**Kind**: instance method of <code>[Rule](#Rule)</code>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| message | <code>string</code> | error message |
+| types | <code>Array.&lt;string&gt;</code> &#124; <code>string</code> &#124; <code>regexp</code> &#124; <code>Array.&lt;regexp&gt;</code> | validate theese types |
+
 <a name="Rule+toInt"></a>
 
 ### rule.toInt([message]) ⇒ <code>this</code>
@@ -379,6 +406,13 @@ Makes the boolean from an input
 | --- | --- | --- |
 | [message] | <code>string</code> | <code>null</code> | 
 
+<a name="Rule+toFileData"></a>
+
+### rule.toFileData() ⇒ <code>this</code>
+Substracts data from the file.
+It actually extracts ".data" property from object, but just on the serverside
+
+**Kind**: instance method of <code>[Rule](#Rule)</code>  
 <a name="Rule"></a>
 
 ## Rule
@@ -398,8 +432,11 @@ Makes the boolean from an input
     * [.isUrl([message], [options])](#Rule+isUrl) ⇒ <code>this</code>
     * [.isRequired([message])](#Rule+isRequired) ⇒ <code>this</code>
     * [.isRequiredIfPresent([message])](#Rule+isRequiredIfPresent) ⇒ <code>this</code>
+    * [.isFileMime(message, types)](#Rule+isFileMime) ⇒ <code>this</code>
+    * [.isFileMaxLength(message, types)](#Rule+isFileMaxLength) ⇒ <code>this</code>
     * [.toInt([message])](#Rule+toInt) ⇒ <code>this</code>
     * [.toBoolean([message])](#Rule+toBoolean) ⇒ <code>this</code>
+    * [.toFileData()](#Rule+toFileData) ⇒ <code>this</code>
 
 <a name="new_Rule_new"></a>
 
@@ -569,6 +606,30 @@ Input is required, only when atributte is not missing (not undefined)
 | --- | --- | --- |
 | [message] | <code>string</code> | <code>null</code> | 
 
+<a name="Rule+isFileMime"></a>
+
+### rule.isFileMime(message, types) ⇒ <code>this</code>
+Validates File mime types. Compatible with browser-side File class and prg-uploader
+
+**Kind**: instance method of <code>[Rule](#Rule)</code>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| message | <code>string</code> | error message |
+| types | <code>Array.&lt;string&gt;</code> &#124; <code>string</code> &#124; <code>regexp</code> &#124; <code>Array.&lt;regexp&gt;</code> | validate theese types |
+
+<a name="Rule+isFileMaxLength"></a>
+
+### rule.isFileMaxLength(message, types) ⇒ <code>this</code>
+Validates File mime types. Compatible with browser-side File class and prg-uploader
+
+**Kind**: instance method of <code>[Rule](#Rule)</code>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| message | <code>string</code> | error message |
+| types | <code>Array.&lt;string&gt;</code> &#124; <code>string</code> &#124; <code>regexp</code> &#124; <code>Array.&lt;regexp&gt;</code> | validate theese types |
+
 <a name="Rule+toInt"></a>
 
 ### rule.toInt([message]) ⇒ <code>this</code>
@@ -591,3 +652,10 @@ Makes the boolean from an input
 | --- | --- | --- |
 | [message] | <code>string</code> | <code>null</code> | 
 
+<a name="Rule+toFileData"></a>
+
+### rule.toFileData() ⇒ <code>this</code>
+Substracts data from the file.
+It actually extracts ".data" property from object, but just on the serverside
+
+**Kind**: instance method of <code>[Rule](#Rule)</code>  
